@@ -1,0 +1,856 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=light>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://images-max.oss-cn-shanghai.aliyuncs.com/202302221747703.svg">
+  <link rel="icon" href="https://images-max.oss-cn-shanghai.aliyuncs.com/202302221747703.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Marko">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="泛型的简述和应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛型">
+<meta property="og:url" content="https://geraltgogo.github.io/2023/02/23/generic/index.html">
+<meta property="og:site_name" content="come join me inside">
+<meta property="og:description" content="泛型的简述和应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-23T02:45:12.431Z">
+<meta property="article:modified_time" content="2023-02-23T03:06:25.250Z">
+<meta property="article:author" content="Marko">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>泛型 - come join me inside</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"geraltgogo.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>我思,故我在</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>Me</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="泛型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-23 10:45" pubdate>
+          2023年2月23日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">泛型</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="泛型总结"><a href="#泛型总结" class="headerlink" title="泛型总结"></a>泛型总结</h1><p>自从以前学习泛型之后就一直没有使用过，或者说在项目的开发中没有写过泛型的模型。随着学习的深入也发现了自己的不足，故写下这篇文章作为总结。</p>
+<h2 id="1-什么是泛型"><a href="#1-什么是泛型" class="headerlink" title="1. 什么是泛型"></a>1. 什么是泛型</h2><div class="note note-success">
+            <p><code>泛型</code>：即参数化类型</p><p>顾名思义，就是将类型由原来的具体的类型参数化，类似于方法中的变量参数，此时的类型定义成参数形式，（可以称为类型形参），然后在使用&#x2F;调用时传入具体的类型（类型实参）。</p>
+          </div>
+
+<p>泛型的本质是为了参数化类型，（在不创建新的类型的情况下，通过泛型指定不同类型来控制形参具体限制的类型）。也就是说在泛型使用过程中，操作的数据类型被指定为一个参数，这种参数可以在用在<code>类</code>、<code>接口</code>和<code>方法</code>中，分别称为：<code>泛型类</code>、<code>泛型接口</code>、<code>泛型方法</code>。</p>
+<p>例如：GenericClass{}</p>
+<h3 id="常用的泛型类型变量："><a href="#常用的泛型类型变量：" class="headerlink" title="常用的泛型类型变量："></a>常用的泛型类型变量：</h3><div class="note note-success">
+            <p><code>E</code>：元素（Element），多用于框架</p><p><code>K</code>：关键字（Key）</p><p><code>N</code>：数字（Number）</p><p><code>T</code>：类型（Type)</p><p><code>V</code>：值（Value）</p><p><code>?</code>：通配符</p>
+          </div>
+
+<h2 id="2-为什么使用泛型"><a href="#2-为什么使用泛型" class="headerlink" title="2. 为什么使用泛型"></a>2. 为什么使用泛型</h2><p>首先我们来看两个Demo</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> genericity;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GenericParadigm1</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(String s1, String s2)</span> &#123;<br>        System.out.println(s1 + <span class="hljs-string">&quot;   &quot;</span> + s2);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(Integer i1, Integer i2)</span> &#123;<br>        System.out.println(i1 + <span class="hljs-string">&quot;   &quot;</span> + i2);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(Double d1, Double d2)</span> &#123;<br>        System.out.println(d1 + <span class="hljs-string">&quot;   &quot;</span> + d2);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);<br>        add(<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>);<br>        add(<span class="hljs-string">&quot;hello&quot;</span>, <span class="hljs-string">&quot;world&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的代码中可以看出，<code>add</code>方法其实执行的功能是一样的，但是由于参数类型的不同所以我们得给每个类型都重载一边，这样的话工作量巨大光JDK就几万个类。你年轻，你慢慢重载吧。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> genericity;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GenericParadigm2</span> &#123;<br><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">C</span> &#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">List</span> <span class="hljs-variable">list</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>();<br>        list.add(<span class="hljs-string">&quot;string&quot;</span>);<br>        list.add(<span class="hljs-number">1</span>);<br>        list.add(<span class="hljs-number">30L</span>);<br>        list.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">C</span>());<br><br>        <span class="hljs-keyword">for</span> (Object o : list) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> (String) o;<span class="hljs-comment">//在这里强转</span><br>            System.out.println(<span class="hljs-string">&quot;s = &quot;</span> + s);<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">打印信息：</span><br><span class="hljs-comment">s = string</span><br><span class="hljs-comment">Exception in thread &quot;main&quot; java.lang.ClassCastException: ...</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p>在上面代码中可以看出，在我们将一个对象放入集合中，集合不会记住对象的类型，当从集合中取对象时，该对象的编译类型变成了<code>Object</code>类型。</p>
+<p>但如果都是Object类型我们使用的话就需要向下转型。如果向下转型在代码运行期间就很容易出现异常<code>ClassCastException</code>（类型转换异常）所以使用泛型来解决这个问题。</p>
+<p>所以泛型的意义在于：</p>
+<div class="note note-success">
+            <ol><li><strong>适用于多种数据类型执行相同的代码（代码复用）</strong></li><li><strong>泛型中的类型在使用时指定，不需要强制类型转换（类型安全，编译器会检查类型）</strong></li></ol>
+          </div>
+
+<h2 id="3-泛型类"><a href="#3-泛型类" class="headerlink" title="3. 泛型类"></a>3. 泛型类</h2><p>定义一个泛型类：public class <code>GenericClass&lt;T&gt;</code>{}</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> genericity;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GenericClass</span>&lt;T&gt; &#123; <span class="hljs-comment">// &lt;T&gt;表示泛型类</span><br>    <span class="hljs-keyword">private</span> T data;<br><br>    <span class="hljs-keyword">public</span> T <span class="hljs-title function_">getData</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> data;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setData</span><span class="hljs-params">(T data)</span> &#123;<br>        <span class="hljs-built_in">this</span>.data = data;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        GenericClass&lt;String&gt; string = <span class="hljs-keyword">new</span> <span class="hljs-title class_">GenericClass</span>&lt;&gt;();<br>        string.setData(<span class="hljs-string">&quot;我是你大爷&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">data1</span> <span class="hljs-operator">=</span> string.getData();<br>        System.out.println(<span class="hljs-string">&quot;stringGenericClass = &quot;</span> + data1);<br>        <br>        GenericClass&lt;Integer&gt; integer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">GenericClass</span>&lt;&gt;();<br>        integer.setData(<span class="hljs-number">20</span>);<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">data2</span> <span class="hljs-operator">=</span> integer.getData();<br>        System.out.println(<span class="hljs-string">&quot;integer = &quot;</span> + data2);<br>    &#125;<span class="hljs-comment">//由此可以看出，不管是什么数据类型传递进去，取出来的时候还是该数据类型。</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-泛型接口"><a href="#4-泛型接口" class="headerlink" title="4. 泛型接口"></a>4. 泛型接口</h2><p>定义一个泛型接口：public class <code>GenericInterface&lt;T&gt;</code>{}</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> genericity;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">GenericInterface</span>&lt;T&gt; &#123; <span class="hljs-comment">// &lt;T&gt;定义在接口上表示泛型接口</span><br>    <br>    T <span class="hljs-title function_">get</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">set</span><span class="hljs-params">(T data)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>实现泛型接口方式一：public class <code>ImplGenericInterface1&lt;T&gt;</code> implements <code>GenericIntercace&lt;T&gt;</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> genericity;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ImplGenericInterface1</span>&lt;T&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">GenericInterface</span>&lt;T&gt; &#123;<br>    <br>    <span class="hljs-keyword">private</span> T data;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> T <span class="hljs-title function_">get</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> data;<br>    &#125;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">set</span><span class="hljs-params">(T data)</span> &#123;<br>        <span class="hljs-built_in">this</span>.data = data;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        ImplGenericInterface1&lt;String&gt; impl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ImplGenericInterface1</span>&lt;&gt;();<br>        impl.set(<span class="hljs-string">&quot;Hello&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> impl.get();<br>        System.out.println(<span class="hljs-string">&quot;s = &quot;</span> + s);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>实现泛型接口方式二：public class <code>ImplGenericInterface1&lt;T&gt;</code> implements <code>GenericIntercace&lt;T&gt;</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> genericity;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ImplGenericInterface2</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">GenericInterface</span>&lt;String&gt; &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">get</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span>;<br>    &#125;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">set</span><span class="hljs-params">(String data)</span> &#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">ImplGenericInterface2</span> <span class="hljs-variable">impl</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ImplGenericInterface2</span>();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> impl.get();<br>        System.out.println(<span class="hljs-string">&quot;s = &quot;</span> + s);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从上面两种实现方式可以看出：</p>
+<div class="note note-success">
+            <ol><li>实现类<code>ImplGenericInterface1</code>可以不指定实现的参数类型，而使用泛型直接实现接口的方法。但是实现类本身也必须是泛型类，由于是泛型类 在<code>new</code>的时候必须指定其类型.</li><li>实现类<code>ImplGenericInterface2</code>可以在实现接口的时候定义接口的实现类型，这样实现类就可以不定义为泛型类而实现接口的方法，在<code>new</code>的时候也不用指定参数类型。</li></ol>
+          </div>
+
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>在<code>ArrayList</code>集合类就是使用的第一种实现方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ArrayList</span>&lt;E&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractList</span>&lt;E&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">List</span>&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable&#123;<br>    ......<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>Mybatis</code>的<code>Mapper</code>接口中就运用的第二种实现方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Mapper</span>   <span class="hljs-comment">//demo</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">StudentMapper</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">MyBaseMapper</span>&lt;Student&gt; &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-泛型方法"><a href="#5-泛型方法" class="headerlink" title="5. 泛型方法"></a>5. 泛型方法</h2><p>定义一个泛型方法： private static<code>&lt;T&gt; T</code>genericAdd(T a, T b) {}</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GenericMethod1</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> &#123;<br>        System.out.println(a + <span class="hljs-string">&quot;+&quot;</span> + b + <span class="hljs-string">&quot;=&quot;</span> + (a + b));<br>        <span class="hljs-keyword">return</span> a + b;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> &lt;T&gt; T <span class="hljs-title function_">genericAdd</span><span class="hljs-params">(T a, T b)</span> &#123;<br>        System.out.println(a + <span class="hljs-string">&quot;+&quot;</span> + b + <span class="hljs-string">&quot;=&quot;</span>+a+b);<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> &lt;T&gt; T <span class="hljs-title function_">showKeyName</span><span class="hljs-params">(GenericClass&lt;T&gt; container)</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;container key :&quot;</span> + container.getData());<br>        <span class="hljs-comment">//当然这个例子举的不太合适，只是为了说明泛型方法的特性。</span><br>        <span class="hljs-type">T</span> <span class="hljs-variable">test</span> <span class="hljs-operator">=</span> container.getData();<br>        <span class="hljs-keyword">return</span> test;<br>    &#125;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        GenericMethod1.add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">integer</span> <span class="hljs-operator">=</span> GenericMethod1.genericAdd(<span class="hljs-number">83</span>, <span class="hljs-number">4343</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> GenericMethod1.genericAdd(<span class="hljs-string">&quot;我是&quot;</span>, <span class="hljs-string">&quot;你大爷&quot;</span>);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>从上面的泛型方法可以看出：</p>
+<div class="note note-success">
+            <p><code>&lt;T&gt;</code>表示该方法是泛型方法，在方法体中不需要指定传递的参数类型，参数类型在方法使用的时候指定。</p><p><code>&lt;T&gt;</code>也声明了一个泛型T，这个T可以出现在这个泛型方法的任何位置。</p>
+          </div>
+
+
+
+<p>泛型的数量也可以任意多个，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> &lt;T,K&gt; K <span class="hljs-title function_">show</span> <span class="hljs-params">(Generic&lt;T&gt; container)</span>&#123;<br>            ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-泛型的类型限制"><a href="#6-泛型的类型限制" class="headerlink" title="6. 泛型的类型限制"></a>6. 泛型的类型限制</h2><p>如果在方法体中需要运算，使用泛型会导致简单的运算都不能执行。因为泛型的类型是在方法使用的时候指定的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> &lt;T&gt; T <span class="hljs-title function_">getMin</span><span class="hljs-params">(T a, T b)</span> &#123;<br>    <span class="hljs-keyword">return</span> (a.compareTo(b) &gt; <span class="hljs-number">0</span>) ? a : b;<span class="hljs-comment">// 编译时期报错</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>   计算最小值,  <code>compareTO()</code>方法在编译时期就会报错，如果要实现这样的功能就需要对泛型方法的<code>类型做出限定</code>。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Comparable</span>&lt;T&gt;&gt; T <span class="hljs-title function_">getMin</span><span class="hljs-params">(T a, T b)</span> &#123;<br>    <span class="hljs-keyword">return</span> (a.compareTo(b) &lt; <span class="hljs-number">0</span>) ? a : b;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> 限定类型使用<code>extends</code>关键字指定，可以指定<code>类</code>、<code>接口</code>，类放在前面，接口放在后面用<code>&amp;</code>符号分割。</p>
+<p>例如：<code>&lt;T extends ArrayList &amp; Comparable&lt;T&gt; &amp; Serializable&gt;</code></p>
+<p> 再看一个例子:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TypeLimitForClass</span>&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">List</span> &amp; Serializable&gt; &#123;<br>    <span class="hljs-keyword">private</span> T data;<br><br>    <span class="hljs-keyword">public</span> T <span class="hljs-title function_">getData</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> data;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setData</span><span class="hljs-params">(T data)</span> &#123;<br>        <span class="hljs-built_in">this</span>.data = data;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        ArrayList&lt;String&gt; stringArrayList = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        stringArrayList.add(<span class="hljs-string">&quot;A&quot;</span>);<br>        stringArrayList.add(<span class="hljs-string">&quot;B&quot;</span>);<br><br>        ArrayList&lt;Integer&gt; integerArrayList = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        integerArrayList.add(<span class="hljs-number">1</span>);<br>        integerArrayList.add(<span class="hljs-number">2</span>);<br>        integerArrayList.add(<span class="hljs-number">3</span>);<br><br>        TypeLimitForClass&lt;ArrayList&gt; typeLimitForClass01 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeLimitForClass</span>&lt;&gt;();<br>        typeLimitForClass01.setData(stringArrayList);<br><br>        TypeLimitForClass&lt;ArrayList&gt; typeLimitForClass02 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeLimitForClass</span>&lt;&gt;();<br>        typeLimitForClass02.setData(integerArrayList);<br>        <br>        System.out.println(getMinListSize(typeLimitForClass01.getData().size(), typeLimitForClass02.getData().size()));<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Comparable</span>&lt;T&gt;&gt; T <span class="hljs-title function_">getMinListSize</span><span class="hljs-params">(T a, T b)</span> &#123;<br>        <span class="hljs-keyword">return</span> (a.compareTo(b) &lt; <span class="hljs-number">0</span>) ? a : b;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>首先<code>ArrayList</code>是<code>List</code>的子类，但是<code>ArrayList</code>也是个泛型类。虽然创建了<code>ArrayList&lt;String&gt;</code>和<code>ArrayList&lt;Integer&gt;</code>但是都能添加到<code>TypeLimitForClass&lt;ArrayList&gt;</code>中。说明在类上做泛型的限制，如果传递的参数也是泛型类则不会限制泛型类的泛型类型。</p>
+</li>
+<li><p>在方法<code>getMinListSize(T a, T b)</code>中限制了传递参数必须继承<code>Comparable</code>类型。所有数字相关的类都实现Comparable接口。</p>
+</li>
+</ol>
+<h2 id="7-通配符"><a href="#7-通配符" class="headerlink" title="7. 通配符"></a>7. 通配符</h2><p>从上面的泛型方法可以看出：</p>
+<div class="note note-success">
+            <ol><li><code>&lt;? extends Parent&gt;</code> 指定了泛型类型的上限，参数类型必须是<code>Parent</code>的子类或者<code>Parent</code>本身</li><li><code>&lt;? super Child&gt;</code> 指定了泛型类型的下限，参数类型必须是<code>Child</code>的父类，或者<code>Child</code>本身</li><li><code>&lt;?&gt;</code> 指定了没有限制的泛型类型</li><li>关于通配符其实还有很多知识点，相关连接：[通配符](</li></ol>
+          </div>
+
+<h2 id="8-学以致用"><a href="#8-学以致用" class="headerlink" title="8. 学以致用"></a>8. 学以致用</h2><h3 id="1-泛型解析JSON数据封装"><a href="#1-泛型解析JSON数据封装" class="headerlink" title="1. 泛型解析JSON数据封装"></a>1. 泛型解析JSON数据封装</h3><p><code>api返回的json数据</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">200</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;msg&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;成功&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>       	 <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Jay&quot;</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;10086&quot;</span><br>   	   <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>BaseResponse.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BaseResponse</span> &#123;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> code;<br>    <span class="hljs-keyword">private</span> String msg;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getCode</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> code;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setCode</span><span class="hljs-params">(<span class="hljs-type">int</span> code)</span> &#123;<br>        <span class="hljs-built_in">this</span>.code = code;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getMsg</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> msg;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setMsg</span><span class="hljs-params">(String msg)</span> &#123;<br>        <span class="hljs-built_in">this</span>.msg = msg;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>UserResponse.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserResponse</span>&lt;T&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BaseResponse</span> &#123;<br>    <span class="hljs-keyword">private</span> T data;<br><br>    <span class="hljs-keyword">public</span> T <span class="hljs-title function_">getData</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> data;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setData</span><span class="hljs-params">(T data)</span> &#123;<br>        <span class="hljs-built_in">this</span>.data = data;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-泛型加反射实现复用工具类"><a href="#2-泛型加反射实现复用工具类" class="headerlink" title="2. 泛型加反射实现复用工具类"></a>2. 泛型加反射实现复用工具类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GenericUtils</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Movie</span> &#123;<br>        <span class="hljs-keyword">private</span> String name;<br>        <span class="hljs-keyword">private</span> Date time;<br><br>        <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> name;<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> Date <span class="hljs-title function_">getTime</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> time;<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-title function_">Movie</span><span class="hljs-params">(String name, Date time)</span> &#123;<br>            <span class="hljs-built_in">this</span>.name = name;<br>            <span class="hljs-built_in">this</span>.time = time;<br>        &#125;<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Movie&#123;&quot;</span> + <span class="hljs-string">&quot;name=&#x27;&quot;</span> + name + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> + <span class="hljs-string">&quot;, time=&quot;</span> + time + <span class="hljs-string">&#x27;&#125;&#x27;</span>;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        List&lt;Movie&gt; movieList = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>            movieList.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Movie</span>(<span class="hljs-string">&quot;movie&quot;</span> + i, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()));<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;排序前:&quot;</span> + movieList.toString());<br><br>        GenericUtils.sortAnyList(movieList, <span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-literal">true</span>);<br>        System.out.println(<span class="hljs-string">&quot;按name正序排：&quot;</span> + movieList.toString());<br><br>        GenericUtils.sortAnyList(movieList, <span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-literal">false</span>);<br>        System.out.println(<span class="hljs-string">&quot;按name逆序排：&quot;</span> + movieList.toString());<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 对任意集合的排序方法</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> targetList 要排序的实体类List集合</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> sortField  排序字段</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> sortMode   true正序，false逆序</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-keyword">void</span> <span class="hljs-title function_">sortAnyList</span><span class="hljs-params">(List&lt;T&gt; targetList, <span class="hljs-keyword">final</span> String sortField, <span class="hljs-keyword">final</span> <span class="hljs-type">boolean</span> sortMode)</span> &#123;<br>        <span class="hljs-keyword">if</span> (targetList == <span class="hljs-literal">null</span> || targetList.size() &lt; <span class="hljs-number">2</span> || sortField == <span class="hljs-literal">null</span> || sortField.length() == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        Collections.sort(targetList, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Comparator</span>&lt;Object&gt;() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compare</span><span class="hljs-params">(Object obj1, Object obj2)</span> &#123;<br>                <span class="hljs-type">int</span> <span class="hljs-variable">retVal</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-comment">// 获取getXxx()方法名称</span><br>                    <span class="hljs-type">String</span> <span class="hljs-variable">methodStr</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;get&quot;</span> + sortField.substring(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>).toUpperCase() + sortField.substring(<span class="hljs-number">1</span>);<br>                    <span class="hljs-type">Method</span> <span class="hljs-variable">method1</span> <span class="hljs-operator">=</span> ((T) obj1).getClass().getMethod(methodStr, <span class="hljs-literal">null</span>);<br>                    <span class="hljs-type">Method</span> <span class="hljs-variable">method2</span> <span class="hljs-operator">=</span> ((T) obj2).getClass().getMethod(methodStr, <span class="hljs-literal">null</span>);<br>                    <span class="hljs-keyword">if</span> (sortMode) &#123;<br>                        retVal = method1.invoke(((T) obj1), <span class="hljs-literal">null</span>).toString().compareTo(method2.invoke(((T) obj2), <span class="hljs-literal">null</span>).toString());<br>                    &#125; <span class="hljs-keyword">else</span> &#123;<br>                        retVal = method2.invoke(((T) obj2), <span class="hljs-literal">null</span>).toString().compareTo(method1.invoke(((T) obj1), <span class="hljs-literal">null</span>).toString());<br>                    &#125;<br>                &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                    System.out.println(<span class="hljs-string">&quot;List&lt;&quot;</span> + ((T) obj1).getClass().getName() + <span class="hljs-string">&quot;&gt;排序异常！&quot;</span>);<br>                    e.printStackTrace();<br>                &#125;<br>                <span class="hljs-keyword">return</span> retVal;<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-通用列表排序工具类"><a href="#3-通用列表排序工具类" class="headerlink" title="3. 通用列表排序工具类"></a>3. 通用列表排序工具类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 通用列表排序</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> targetList</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> vClass 排序字段对象的class</span><br><span class="hljs-comment">     *               该类需要继承Compable&lt;T&gt;接口，否则会抛出NoSuchMethodException</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> sortField 需要排序的字段</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> forward 是否正序（升序）</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> &lt;T&gt; 列表泛型</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> &lt;V&gt; 排序字段泛型</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, V&gt; <span class="hljs-keyword">void</span> <span class="hljs-title function_">sortAnyList</span><span class="hljs-params">(List&lt;T&gt; targetList, Class&lt;V&gt; vClass, String sortField, <span class="hljs-type">boolean</span> forward)</span> &#123;<br>        <span class="hljs-keyword">if</span> (targetList == <span class="hljs-literal">null</span> || targetList.size() &lt; <span class="hljs-number">2</span> || sortField == <span class="hljs-literal">null</span> || sortField.length() == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        Collections.sort(targetList, (o1, o2) -&gt; &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">methodName</span> <span class="hljs-operator">=</span><span class="hljs-string">&quot;get&quot;</span> + sortField.substring(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>).toUpperCase() + sortField.substring(<span class="hljs-number">1</span>);<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-comment">//获取compareTo(V ) 方法</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">compareToName</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;compareTo&quot;</span>;<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">compareToMethod</span> <span class="hljs-operator">=</span> vClass.getMethod(compareToName, Object.class);<br>                <span class="hljs-comment">//获取排序字段值的方法</span><br>                <span class="hljs-type">Method</span> <span class="hljs-variable">getFiledMethod</span> <span class="hljs-operator">=</span> o1.getClass().getMethod(methodName);<br>                <span class="hljs-comment">//获取两个对象需要排序的值的值</span><br>                <span class="hljs-type">V</span> <span class="hljs-variable">v1</span> <span class="hljs-operator">=</span> (V)getFiledMethod.invoke(o1);<br>                <span class="hljs-type">V</span> <span class="hljs-variable">v2</span> <span class="hljs-operator">=</span> (V)getFiledMethod.invoke(o2);<br>                <span class="hljs-keyword">if</span> (forward) &#123;<br>                    <span class="hljs-comment">//正序</span><br>                    <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>)compareToMethod.invoke(v1, v2);<br>                &#125;<span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>)compareToMethod.invoke(v2, v1);<br>                &#125;<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                System.out.println(<span class="hljs-string">&quot;List&lt;&quot;</span> + o1.getClass().getName() + <span class="hljs-string">&quot;&gt;&quot;</span> + <span class="hljs-string">&quot;排序异常&quot;</span>);<br>                e.printStackTrace();<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-Gson库中的泛型的使用-TypeToken"><a href="#4-Gson库中的泛型的使用-TypeToken" class="headerlink" title="4. Gson库中的泛型的使用-TypeToken"></a>4. Gson库中的泛型的使用-TypeToken</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GsonGeneric</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>        <span class="hljs-keyword">private</span> String name;<br>        <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(String name, <span class="hljs-type">int</span> age)</span> &#123;<br>            <span class="hljs-built_in">this</span>.name = name;<br>            <span class="hljs-built_in">this</span>.age = age;<br>        &#125;<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Person&#123;&quot;</span> +<br>                    <span class="hljs-string">&quot;name=&#x27;&quot;</span> + name + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> +<br>                    <span class="hljs-string">&quot;, age=&quot;</span> + age +<br>                    <span class="hljs-string">&#x27;&#125;&#x27;</span>;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Gson</span> <span class="hljs-variable">gson</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Gson</span>();<br>        List&lt;Person&gt; personList = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>            personList.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;name&quot;</span> + i, <span class="hljs-number">18</span> + i));<br>        &#125;<br>        <span class="hljs-comment">// Serialization</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">json</span> <span class="hljs-operator">=</span> gson.toJson(personList);<br>        System.out.println(json);<br>        <span class="hljs-comment">// Deserialization</span><br>        <span class="hljs-type">Type</span> <span class="hljs-variable">personType</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeToken</span>&lt;List&lt;Person&gt;&gt;() &#123;&#125;.getType();<br>        List&lt;Person&gt; personList2 = gson.fromJson(json, personType);<br>        System.out.println(personList2);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="结言"><a href="#结言" class="headerlink" title="结言"></a>结言</h1><div class="note note-success">
+            <p>该文章为个人学习用，参考了很多资料。我也看了好久：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/986f732ed2f1"><code>Java泛型详解</code></a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/s10461/article/details/53941091"><code>Java泛型方法详解</code></a>，大佬还是大佬呀，把这两篇文章看透也就能完全掌握了。</p><p>对于Java泛型，我也是大致的了解，因为在实际开发中，几乎很少会用到泛型（指“CRUD”）。泛型的使用就是为了复用，而大部分泛型也都出现在项目的架构中。如果不掌握泛型的使用和设计模式的概念的话就直接去阅读源码会很吃力。而不阅读源码，不去理解编写者的思想就等于闭门造车很难进步。时间久了又如何苟且于乱世呢？</p>
+          </div>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>泛型</div>
+      <div>https://geraltgogo.github.io/2023/02/23/generic/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Marko</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="ND - 禁止演绎">
+                    <i class="iconfont icon-nd"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/20/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"GU2ipO88vlHcRbAD8C71GWkd-gzGzoHsz","appKey":"1RedGrqQLxCLNOx7Pi5ofC1K","path":"window.location.pathname","placeholder":null,"avatar":"robohash","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
