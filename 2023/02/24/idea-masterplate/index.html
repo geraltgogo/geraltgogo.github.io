@@ -25,10 +25,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://images-max.oss-cn-shanghai.aliyuncs.com/202302270918657.png">
 <meta property="article:published_time" content="2023-02-24T09:51:32.474Z">
-<meta property="article:modified_time" content="2023-02-27T02:40:33.300Z">
+<meta property="article:modified_time" content="2023-02-27T06:17:28.774Z">
 <meta property="article:author" content="Marko">
 <meta property="article:tag" content="Java">
-<meta property="article:tag" content="IDEA">
+<meta property="article:tag" content="Idea">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://images-max.oss-cn-shanghai.aliyuncs.com/202302270918657.png">
   
@@ -223,7 +223,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://images-max.oss-cn-shanghai.aliyuncs.com/202302241445670.jpeg') no-repeat center center; background-size: cover;">
+     style="background: url('https://images-max.oss-cn-shanghai.aliyuncs.com/202302221752597.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
       <div class="banner-text text-center fade-in-up">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          3.7k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          5 分钟
+          10 分钟
         
       </span>
     
@@ -322,24 +322,49 @@
 
 
 
-<p><span>      IDEA 本身就自带了很多模版来便利开发者。我们主要设置的是两种模版: 创建 Java 文件时, 方法的注释</span></p>
+<p><span>      IDEA 本身就自带了很多模版来便利开发者。我们主要设置的是两种模版: 创建 Java 文件、方法的注释</span></p>
 <h3 id="效果图"><a href="# 效果图" class="headerlink" title="效果图"></a>效果图</h3><ol>
 <li><p>新增 Java 文件模版</p>
 <img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271018832.png" srcset="/img/loading.gif" lazyload alt="image-20230227101800804" style="zoom:50%;" />
 </li>
 <li><p>方法注释模版</p>
-<img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271020544.png" srcset="/img/loading.gif" lazyload alt="image-20230227102032519" style="zoom:50%;" /></li>
+<img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271341705.png" srcset="/img/loading.gif" lazyload alt="image-20230227134115677" style="zoom:50%;" /></li>
 </ol>
-<h2 id="1- 创建 Java 文件模版"><a href="#1- 创建 Java 文件模版" class="headerlink" title="1. 创建 Java 文件模版"></a>1. 创建 Java 文件模版</h2><div class="note note-secondary">
-            <p>原版选择 File-&gt;Settings→Editor→File and Code Templates→Files→Class, 我使用了中文插件, 这里不进行详细赘述 </p><p> 可以看到创建 Class 时引入了一个参数”File Header.java”。对应的是 Files 旁边的 Includes→File Header 文件。而引入的这一部分其实就是创建 Class 文件的模版。 当然 File Header.java 也可以拓展出很多的功能。</p>
+<h2 id="1- 创建 Java 文件模版"><a href="#1- 创建 Java 文件模版" class="headerlink" title="1. 创建 Java 文件模版"></a>1. 创建 Java 文件模版</h2><div class="note note-primary">
+            <ol><li>原版选择 File-&gt;Settings→Editor→File and Code Templates→Files→Class, 我使用了中文插件, 这里不进行详细赘述</li></ol>
           </div>
+
+<span>
+
+<p>      可以看到创建 Class 时引入了一个参数”File Header.java”。对应的是 Files 旁边的 Includes→File Header 文件。而引入的这一部分其实就是创建 Class 文件的模版。 当然 File Header.java 也可以拓展出很多的功能。 内置模板是可编辑的, 可以包含一个代码片段, 除了静态文本、代码和注释。</p>
+</span>
+
+
+
+
 
 
 
 <img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271031631.png" srcset="/img/loading.gif" lazyload alt="image-20230227103149603" style="zoom:50%;" />
 
-<div class="note note-secondary">
-            
+<div class="note note-primary">
+            <ol start="2"><li>右侧填入以下文本</li></ol>
+          </div>
+
+<div class="note note-warning">
+            <p>当新增类时, 会自动引入 <code>Lombok</code> 类, 如果不兼容去掉 <code> import lombok.Data;</code> 和<code>@Data</code>即可。</p><p>自动实现了 <code>Serializable</code> 类, 表示可进行序列化操作, 并生成 <code>serialVersionUID</code> 为当前时间精确到秒。</p>
+          </div>
+
+<h3 id="文本"><a href="# 文本" class="headerlink" title="文本"></a>文本</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">#<span class="hljs-keyword">if</span> ($&#123;PACKAGE_NAME&#125; &amp;&amp; $&#123;PACKAGE_NAME&#125; != <span class="hljs-string">&quot;&quot;</span>)<span class="hljs-keyword">package</span> $&#123;PACKAGE_NAME&#125;;#end<br><span class="hljs-keyword">import</span> lombok.Data;<br><span class="hljs-keyword">import</span> java.io.Serializable;<br><br><br>#parse(<span class="hljs-string">&quot;File Header.java&quot;</span>)<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">$</span>&#123;NAME&#125; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">long</span> <span class="hljs-variable">serialVersionUID</span> <span class="hljs-operator">=</span> $&#123;YEAR&#125;$&#123;MONTH&#125;$&#123;DAY&#125;$&#123;HOUR&#125;$&#123;MINUTE&#125;$&#123;SECOND&#125;L;<br>    <br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<div class="note note-primary">
+            <ol start="3"><li>选择包含 -&gt; 编辑 File Header, 如果没有则新增。 File Header 里面填写 你需要的注释模版即可, 您还可以使用预定义的变量，这些变量将被扩展为相应的值。</li></ol>
           </div>
 
 
@@ -348,45 +373,40 @@
 
 
 
+<h3 id="模版文案"><a href="# 模版文案" class="headerlink" title="模版文案"></a>模版文案</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>/**<br> * &lt;p&gt;<br> * TODO<br> * &lt;/p &gt;<br> * <br> * @author XXX<br> * @since <span class="hljs-variable">$&#123;YEAR&#125;</span>-<span class="hljs-variable">$&#123;MONTH&#125;</span>-<span class="hljs-variable">$&#123;DAY&#125;</span><br> */<br></code></pre></td></tr></table></figure>
+
+<h3 id="变量值"><a href="# 变量值" class="headerlink" title="变量值"></a>变量值</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$&#123;PACKAGE_NAME&#125;</span>                在其中创建新文件的软件包名称<br><span class="hljs-variable">$&#123;USER&#125;</span>                        当前的用户系统登录名<br><span class="hljs-variable">$&#123;DATE&#125;</span>                        当前系统日期<br><span class="hljs-variable">$&#123;TIME&#125;</span>                        当前系统时间<br><span class="hljs-variable">$&#123;YEAR&#125;</span>                        当前年度<br><span class="hljs-variable">$&#123;MONTH&#125;</span>                       当前月份<br><span class="hljs-variable">$&#123;MONTH_NAME_SHORT&#125;</span>            当前月份名称的前 <span class="hljs-number">3</span> 个字母。 例如：Jan、Feb 等<br><span class="hljs-variable">$&#123;MONTH_NAME_FULL&#125;</span>             当前月份的全名。 例如：January、February 等<br><span class="hljs-variable">$&#123;DAY&#125;</span>                         当前月份的日期<br><span class="hljs-variable">$&#123;DAY_NAME_SHORT&#125;</span>              当前日期名称的前 <span class="hljs-number">3</span> 个字母。 例如：Mon、Tue 等<br><span class="hljs-variable">$&#123;DAY_NAME_FULL&#125;</span>               当前日期的全名。 例如：Monday、Tuesday 等<br><span class="hljs-variable">$&#123;HOUR&#125;</span>                        当前小时<br><span class="hljs-variable">$&#123;MINUTE&#125;</span>                      当前分钟<br><span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>                当前项目名称<br></code></pre></td></tr></table></figure>
+
+<div class="note note-primary">
+            <ol start="4"><li>粘贴后保存即可。</li></ol>
+          </div>
 
 
 
+<h2 id="2- 方法名模版"><a href="#2- 方法名模版" class="headerlink" title="2. 方法名模版"></a>2. 方法名模版</h2><div class="note note-info">
+            <p>此模版不仅支持请求参数和返回参数的展示, 还自动进行了格式化处理。支持复杂入参和返回值。</p><p><code>TODO</code> 是为了提醒开发者别忘记填写 </p><p><code>{@link XXX}</code> 是为了在渲染视图模式下可直接跳转到具体类</p>
+          </div>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>
+<p>IDEA 还没有智能到自动为我们创建方法注释，这就是要我们手动为方法添加注释，我们的习惯是<code> /**+Enter</code>，这里我们也按照这种习惯来设置 IDEA 的方法注释</p>
+<div class="note note-primary">
+            <ol><li>File–&gt;Settings–&gt;Editor–&gt;Live Templates 选择添加模版组(Template Group…)</li></ol>
+          </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271247779.png" srcset="/img/loading.gif" lazyload alt="image-20230227124754752" style="zoom:50%;" />
 
 
 
 
 
+<div class="note note-primary">
+            <ol start="2"><li>填入新的组名。这里随便填写, 名称中文也没关系, 没有任何影响主要是为了方便你区分</li></ol>
+          </div>
 
 
 
 
 
-
-
-
-
+<img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271251240.png" srcset="/img/loading.gif" lazyload alt="image-20230227125123208" style="zoom:50%;" />
 
 
 
@@ -394,21 +414,63 @@
 
 
 
+<div class="note note-primary">
+            <ol start="3"><li>点击 <code> 方法模版 </code> 再点击右上角 <code>+</code> 选择动态模版。</li></ol>
+          </div>
+
+<p>按照之前所提的本人的习惯, 这里的缩写需要填写 * 号, 描述随意。右侧选项照抄即可。</p>
+<img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271257533.png" srcset="/img/loading.gif" lazyload alt="image-20230227125711503" style="zoom:50%;" />
 
 
-<p>return</p>
+
+<h3 id="模版文本"><a href="# 模版文本" class="headerlink" title="模版文本"></a><strong>模版文本</strong></h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">* <br> *  TODO<br> * <span class="hljs-variable">$param</span>$<br> * @return <span class="hljs-variable">$return</span>$<br> * @author myk <br> */<br></code></pre></td></tr></table></figure>
+
+<p><span>这里的 <code>$param$</code>和 <code>$return$</code>为自定义参数, 分别表示入参和返回参数。</span></p>
+<p>这里本人不喜欢太复杂的描述, 个人觉得方法注释的定义就是为了告诉阅读者 请求值和返回值 的类型、方法的功能, 而这两点是最重要的。</p>
+<div class="note note-primary">
+            <ol start="4"><li>点击右侧编辑变量加入填入两个自定义参数名 param,return。</li></ol>
+          </div>
+
+
+
+<img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271309931.png" srcset="/img/loading.gif" lazyload alt="image-20230227130922900" style="zoom:50%;" />
+
+
+
+<h3 id="表达式"><a href="# 表达式" class="headerlink" title="表达式:"></a>表达式:</h3><div class="note note-warning">
+            <p>这里的表达式其实就是 groovy 脚本文件, Idea 在很多地方都支持这种脚本语言。</p>
+          </div>
+
+<p>其中 param 获取了所有的请求参数名称和类型 进行了遍历操作</p>
+<p><strong>param</strong></p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs groovy">groovyScript(<span class="hljs-string">&quot;</span><br><span class="hljs-string">if(\&quot;$&#123;_1&#125;\&quot;.length() == 2) &#123; </span><br><span class="hljs-string">   return &#x27;&#x27;;     </span><br><span class="hljs-string">   &#125; else &#123;      </span><br><span class="hljs-string">       def int1 = 0;</span><br><span class="hljs-string">       def int2 = 0;   </span><br><span class="hljs-string">       def result=&#x27;&#x27;;   </span><br><span class="hljs-string">       def params=\&quot;$&#123;_1&#125;\&quot;</span><br><span class="hljs-string">       .replaceAll(&#x27;[\\\\[|\\\\]|\\\\s]&#x27;,&#x27;&#x27;)</span><br><span class="hljs-string">       .split(&#x27;,&#x27;)        </span><br><span class="hljs-string">       .toList();</span><br><span class="hljs-string">         def types =\&quot;$&#123;_2&#125;\&quot;</span><br><span class="hljs-string">       .replaceAll(&#x27;[\\\\[|\\\\]|\\\\s]&#x27;,&#x27;&#x27;)</span><br><span class="hljs-string">       .split(&#x27;,&#x27;)        </span><br><span class="hljs-string">       .toList();</span><br><span class="hljs-string">       </span><br><span class="hljs-string">       for(i = 0; i &lt; params.size(); i++) &#123;   </span><br><span class="hljs-string">           if(params[i]==&#x27;null&#x27;)&#123;  </span><br><span class="hljs-string">               return;     </span><br><span class="hljs-string">           &#125;else&#123;      </span><br><span class="hljs-string">               if (int1&lt;= params[i].length()) &#123; </span><br><span class="hljs-string">                   int1 = params[i].length();  </span><br><span class="hljs-string">               &#125;       </span><br><span class="hljs-string">           &#125;         </span><br><span class="hljs-string">       &#125;;     </span><br><span class="hljs-string">           for(i = 0; i &lt; params.size(); i++) &#123; </span><br><span class="hljs-string">               if(params[i]==&#x27;null&#x27;)&#123;  </span><br><span class="hljs-string">                   return;    </span><br><span class="hljs-string">               &#125;else&#123;     </span><br><span class="hljs-string">                   def s= &#x27;&#x27;;     </span><br><span class="hljs-string">                   int2 = int1-(params[i].length()); </span><br><span class="hljs-string">                   for(j = 0; j &lt; int2; j++)&#123;   </span><br><span class="hljs-string">                       s+=&#x27; &#x27;;           </span><br><span class="hljs-string">                   &#125;;             </span><br><span class="hljs-string">                       result+=&#x27;\\n * @param &#x27; + params[i] + s +&#x27; &#123;@link &#x27;+types[i]+&#x27;&#125;&#x27;   </span><br><span class="hljs-string">               &#125;   </span><br><span class="hljs-string">           &#125;; </span><br><span class="hljs-string">               return result;</span><br><span class="hljs-string">   &#125;</span><br><span class="hljs-string">&quot;</span>,methodParameters(),methodParameterTypes()); <br></code></pre></td></tr></table></figure>
 
 
 
-<p>param</p>
+<p><strong>return</strong></p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs groovy">groovyScript(<span class="hljs-string">&quot;</span><br><span class="hljs-string">             def result=\&quot;$&#123;_1&#125;\&quot;;</span><br><span class="hljs-string">             if(result == &#x27;void&#x27;)&#123;</span><br><span class="hljs-string">                 return &#x27;&#x27;;</span><br><span class="hljs-string">             &#125;else&#123;</span><br><span class="hljs-string">                 return &#x27;&#123;@link &#x27;+result+&#x27;&#125;&#x27;;</span><br><span class="hljs-string">             &#125;</span><br><span class="hljs-string">             &quot;</span>,methodReturnType()<br>            )<br></code></pre></td></tr></table></figure>
 
+<div class="note note-warning">
+            <p>点击确定之后在右下角点击 <code>更改</code> 在所有位置中只选择 Java, 否则所有文件 进行 <code>/**+Enter</code> 操作都会出现模版信息</p>
+          </div>
+
+
+
+<img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271311981.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+
+
+
+<div class="note note-primary">
+            <ol start="5"><li>点击确认保存即可, 在后续在方法上进行 <code>/**+Enter</code> 操作则会显示入参和返回值信息</li></ol>
+          </div>
 
 
 
 
 
+<h2 id="结语"><a href="# 结语" class="headerlink" title="结语"></a>结语</h2><div class="note note-secondary">
+            <p>ok, 到此为止!</p><p>Idea 的类和方法的模版设置基本上就这些了, 在实际开发中一般不会过多的变动模版, 我这个模版是我迭代了多次所总结出来的最通用的模版。</p>
+          </div>
 
 
                 
@@ -445,7 +507,7 @@
       
         <a href="/tags/Java/">#Java</a>
       
-        <a href="/tags/IDEA/">#IDEA</a>
+        <a href="/tags/Idea/">#Idea</a>
       
     </div>
   
