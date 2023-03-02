@@ -16,26 +16,26 @@
   <meta name="author" content="Marko">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Java 8 新特性 Optional类,更优化您的异常类">
+    <meta name="description" content="IDEA工具新增Java类、方法初始化注释模版。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Optional 详解">
-<meta property="og:url" content="https://geraltgogo.github.io/2023/02/27/java-optional/index.html">
+<meta property="og:title" content="算法之路 - 排序">
+<meta property="og:url" content="https://geraltgogo.github.io/2023/02/28/sort/index.html">
 <meta property="og:site_name" content="Je pense, donc je suis">
-<meta property="og:description" content="Java 8 新特性 Optional类,更优化您的异常类">
+<meta property="og:description" content="IDEA工具新增Java类、方法初始化注释模版。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271601111.png">
-<meta property="article:published_time" content="2023-02-27T07:54:42.329Z">
-<meta property="article:modified_time" content="2023-02-27T10:28:58.248Z">
+<meta property="og:image" content="https://images-max.oss-cn-shanghai.aliyuncs.com/202302270918657.png">
+<meta property="article:published_time" content="2023-02-28T06:49:00.911Z">
+<meta property="article:modified_time" content="2023-03-01T02:22:33.265Z">
 <meta property="article:author" content="Marko">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://images-max.oss-cn-shanghai.aliyuncs.com/202302271601111.png">
+<meta name="twitter:image" content="https://images-max.oss-cn-shanghai.aliyuncs.com/202302270918657.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Optional 详解 - Je pense, donc je suis</title>
+  <title>算法之路 - 排序 - Je pense, donc je suis</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Optional 详解"></span>
+            <span id="subtitle" data-typed-text="算法之路 - 排序"></span>
           
         </div>
 
@@ -239,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-27 15:54" pubdate>
-          2023年2月27日 下午
+        <time datetime="2023-02-28 14:49" pubdate>
+          2023年2月28日 下午
         </time>
       </span>
     
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          1k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          8 分钟
+          3 分钟
         
       </span>
     
@@ -308,48 +308,41 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Optional 详解</h1>
+            <h1 style="display: none">算法之路 - 排序</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h1><div class="note note-success">
-            <p>我们都知道在 Java8 中引入了很多有用的 API, 其中就包含了<code>optional</code>。只要稍加运用就能够发现, 这个类可以大大减少开发者的代码输出, 也可以使代码更加的优雅, 让代码阅读者看见就想亲你两口</p>
-          </div>
-
-<h2 id="1- 能做什么"><a href="#1- 能做什么" class="headerlink" title="1. 能做什么?"></a>1. 能做什么?</h2><p>在我们实际业务开发中, 大部分情况下交互数据库或者调用别人的接口时, 都不能保证对方传递过来的参数是否为空, 从而导致每次都要判断空指针。</p>
-<p>如果我需要获取一个对象的名称并进行大些的操作</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">getUserName</span><span class="hljs-params">(User user)</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != user) &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> user.getName();<br>        <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != name) &#123;<br>            <span class="hljs-keyword">return</span> name.toUpperCase(Locale.ROOT);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>那如何使用 optional 进行的操作呢?</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">getUserName</span><span class="hljs-params">(User user)</span> &#123;<br>    <span class="hljs-keyword">return</span> Optional.ofNullable(user)<br>            .map(User::getName)<br>            .map(String::toUpperCase)<br>            .orElse(<span class="hljs-literal">null</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这样不就即减少了代码的体积, 也大大增加了代码的可读性。尤其是在复杂的项目中体现尤为明显。所以更应该从里至外的了解这个类。</p>
-<h2 id="2- 创建 -Optional- 实例"><a href="#2- 创建 -Optional- 实例" class="headerlink" title="2. 创建 Optional 实例"></a>2. 创建 Optional 实例 </h2><h3 id="构造方法"><a href="# 构造方法" class="headerlink" title="构造方法"></a> 构造方法</h3><div class="note note-success">
-            <p>创建 Optional 实例有三种方式：</p><ol><li>of(obj)				</li><li>ofNullable(obj)</li><li>empty()</li></ol>
-          </div>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 返回一个 Optional 对象，如果传入参数是 Null  则会报 NPE，所以不太建议使用。</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; Optional&lt;T&gt; <span class="hljs-title function_">of</span><span class="hljs-params">(T value)</span> &#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Optional</span>&lt;&gt;(value);<br>   &#125;<br><br><span class="hljs-comment">// 返回一个 Optional 对象，可以传入 Null 值。如果这个方法传入的是 Null，则会生成一个空的 Optional 对象，可避免 NPE。</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; Optional&lt;T&gt; <span class="hljs-title function_">ofNullable</span><span class="hljs-params">(T value)</span> &#123;<br>       <span class="hljs-keyword">return</span> value == <span class="hljs-literal">null</span> ? empty() : of(value);<br>   &#125;<br><br><span class="hljs-comment">// 生成一个空个 Option 对象</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>&lt;T&gt; Optional&lt;T&gt; <span class="hljs-title function_">empty</span><span class="hljs-params">()</span> &#123;<br>       <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span><br>       Optional&lt;T&gt; t = (Optional&lt;T&gt;) EMPTY;    <span class="hljs-comment">//EMPTY = new Optional&lt;?&gt;();</span><br>       <span class="hljs-keyword">return</span> t;<br>   &#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="算法之路 - 排序"><a href="# 算法之路 - 排序" class="headerlink" title="算法之路 - 排序"></a>算法之路 - 排序 </h1><h2 id="桶排序"><a href="# 桶排序" class="headerlink" title="桶排序"></a> 桶排序 </h2><h2 id="冒泡排序"><a href="# 冒泡排序" class="headerlink" title="冒泡排序"></a> 冒泡排序</h2><img src="https://images-max.oss-cn-shanghai.aliyuncs.com/202302281522043.png" srcset="/img/loading.gif" lazyload alt="image-20230228152249014" style="zoom:50%;" />
 
 
 
-<h2 id="3- 常用方法"><a href="#3- 常用方法" class="headerlink" title="3. 常用方法"></a>3. 常用方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 获取获取 Optional 对象的 value 值。</span><br>	<span class="hljs-keyword">public</span> T <span class="hljs-title function_">get</span><span class="hljs-params">()</span>;<br><br><span class="hljs-comment">// 判断 value 对象是否为空</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPresent</span><span class="hljs-params">()</span>;<br><br><span class="hljs-comment">// 如果是空 那么就执行方法体内容</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">ifPresent</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-built_in">super</span> T&gt; consumer)</span>;<br><br><span class="hljs-comment">// 如果值不等于 Null, 返回 value 值。否则返回 other（传入参数）。</span><br>	<span class="hljs-keyword">public</span> T <span class="hljs-title function_">orElse</span><span class="hljs-params">(T other)</span>;<br><br><span class="hljs-comment">// 如果值不等于 Null, 返回 value 值。否则执行方法获取;</span><br>	<span class="hljs-keyword">public</span> T <span class="hljs-title function_">orElseGet</span><span class="hljs-params">(Supplier&lt;? extends T&gt; other)</span>;<br><br><span class="hljs-comment">// 如果是空则抛出异常, 可自定义</span><br>	<span class="hljs-keyword">public</span> &lt;X <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Throwable</span>&gt; T <span class="hljs-title function_">orElseThrow</span><span class="hljs-params">(Supplier&lt;? extends X&gt; exceptionSupplier)</span> <span class="hljs-keyword">throws</span> X;<br> <br><span class="hljs-comment">// 如果方法里返回的是 true, 则 value 变为 null。一般和 orElse 一起使用</span><br>	<span class="hljs-keyword">public</span> Optional&lt;T&gt; <span class="hljs-title function_">filter</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-built_in">super</span> T&gt; predicate)</span>;<br><br><span class="hljs-comment">// 执行方法返回新的类型 Optional&lt;A&gt; -&gt; Optional&lt;B&gt;</span><br>	<span class="hljs-keyword">public</span>&lt;U&gt; Optional&lt;U&gt; <span class="hljs-title function_">map</span><span class="hljs-params">(Function&lt;? <span class="hljs-built_in">super</span> T, ? extends U&gt; mapper)</span>;<br><br><span class="hljs-comment">// 执行方法返回新的类型 Optional&lt;A&gt; -&gt; Optional&lt;B&gt; 此方法和 map 类似 唯一的区别是 不会返回一个 Optional&lt;Optional&lt;A&gt;&gt; 类型的数据</span><br>	<span class="hljs-keyword">public</span> &lt;U&gt; Optional&lt;U&gt; <span class="hljs-title function_">flatMap</span><span class="hljs-params">(Function&lt;? <span class="hljs-built_in">super</span> T, ? extends Optional&lt;? extends U&gt;&gt; mapper)</span>;<br>       <br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="4- 常用案例"><a href="#4- 常用案例" class="headerlink" title="4. 常用案例"></a>4. 常用案例</h2><h3 id="1-ifPresent"><a href="#1-ifPresent" class="headerlink" title="1.  ifPresent"></a>1.  ifPresent</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 选出 seq 最小的轮播图 ， 设置主图数据</span><br>req.getGoodsImgList()<br>        .stream()<br>        .min(Comparator.comparing(GoodsImgAO::getSeq, Comparator.naturalOrder()))<br>        <span class="hljs-comment">// 如果 Optional 值不为空 执行此方法！</span><br>        .ifPresent(e -&gt; goodsInfoDO.setMainImg(WebUrlHelper.saveStaticUrl(e.getImgUrl())));<br></code></pre></td></tr></table></figure>
-
-<h3 id="2-orElse"><a href="#2-orElse" class="headerlink" title="2. orElse"></a>2. orElse</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OptionalTest</span> &#123;<br>    <span class="hljs-keyword">private</span>  <span class="hljs-type">User</span> <span class="hljs-variable">userNull</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span>  <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>();<br>    &#123;<br>        user.setAge(<span class="hljs-number">45</span>);<br>        user.setName(<span class="hljs-string">&quot; 曹达华 &quot;</span>);<br>    &#125;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">orElseTest</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> Optional.ofNullable(userNull).orElse(<span class="hljs-built_in">this</span>.user);<br>        System.out.println(<span class="hljs-string">&quot;user = &quot;</span> + user);<br>    &#125;<br>&#125;<span class="hljs-comment">// 打印： user = OptionalTest.User(name= 曹达华, age=20)</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="3-map"><a href="#3-map" class="headerlink" title="3. map"></a>3. map</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 获取 User 对象的名称并进行大写</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">getUserName</span><span class="hljs-params">(User user)</span> &#123;<br>        <span class="hljs-keyword">return</span> Optional.ofNullable(user)<br>                .map(User::getName)<br>                .map(String::toUpperCase)<br>                .orElse(<span class="hljs-literal">null</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>每次查询相邻的两个数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *  冒泡排序</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> ints &#123;<span class="hljs-doctag">@link</span> int&#125;</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> int[]&#125;</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> myk</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">bubblingSort</span><span class="hljs-params">(<span class="hljs-type">int</span>[] ints)</span> &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i : ints) &#123; <br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; ints.length - <span class="hljs-number">1</span>; j++) &#123;<br>            <span class="hljs-keyword">if</span> (ints[j] &gt; ints[j + <span class="hljs-number">1</span>]) &#123;<br>                <span class="hljs-type">int</span> <span class="hljs-variable">intJ</span> <span class="hljs-operator">=</span> ints[j];<br>                ints[j] = ints[j + <span class="hljs-number">1</span>];<br>                ints[j + <span class="hljs-number">1</span>] = intJ;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
 
 
-<h3 id="结语"><a href="# 结语" class="headerlink" title="结语"></a>结语</h3><div class="note note-success">
-            <span><p>        如果你同意 <code> 字如其人 </code> 的观点, 那么我说 <code> 码如其人 </code> 你应该不难理解。虽然我不是最优秀的, 但是我要做最优雅的程序员。良好的代码风格不管是对于观察者、开发者或者 code review 都是一件非常酷的一件事情。</p></span>
-          </div>
+
+
+
+
+
+
+<h2 id="快速排序"><a href="# 快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 快速排序</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> array &#123;<span class="hljs-doctag">@link</span> int&#125;</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> int[]&#125;</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@author</span> myk</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">quickSort</span><span class="hljs-params">(<span class="hljs-type">int</span>[] array, <span class="hljs-type">int</span> left, <span class="hljs-type">int</span> right)</span> &#123;<br>      <span class="hljs-comment">//left 数组的最小下标，right 数组最大下标</span><br>      <span class="hljs-keyword">if</span> (left &gt; right) &#123;                    <span class="hljs-comment">// 判断本次是否执行</span><br>          <span class="hljs-keyword">return</span>;<br>      &#125;<br>      <span class="hljs-type">int</span> <span class="hljs-variable">low</span> <span class="hljs-operator">=</span> left;<br>      <span class="hljs-type">int</span> <span class="hljs-variable">high</span> <span class="hljs-operator">=</span> right;<br>      <span class="hljs-type">int</span> <span class="hljs-variable">mid</span> <span class="hljs-operator">=</span> array[low];                    <span class="hljs-comment">// 将数组第一个数定为基准</span><br>      <span class="hljs-keyword">while</span> (low &lt; high) &#123;<br>          <span class="hljs-keyword">while</span> (low &lt; high &amp;&amp; array[high] &gt;= mid) <span class="hljs-comment">// 从后往前，直到找到小于基准的数</span><br>              high--;<br>          array[low] = array[high];            <span class="hljs-comment">// 小数移动到前面</span><br>          <span class="hljs-keyword">while</span> (low &lt; high &amp;&amp; array[low] &lt;= mid)  <span class="hljs-comment">// 从前往后，直到找到大于基准的数</span><br>              low++;<br>          array[high] = array[low];            <span class="hljs-comment">// 大数移动到后面</span><br>      &#125;<br>      array[low] = mid;                        <span class="hljs-comment">// 此时 low 在中间，将基准放入</span><br>      quickSort(array, left, low - <span class="hljs-number">1</span>);      <span class="hljs-comment">// 小数组递归</span><br>      quickSort(array, low + <span class="hljs-number">1</span>, right);      <span class="hljs-comment">// 大数组递归</span><br>  &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
                 
               </div>
             
@@ -382,7 +375,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Java/">#Java</a>
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
       
     </div>
   
@@ -394,8 +387,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Optional 详解</div>
-      <div>https://geraltgogo.github.io/2023/02/27/java-optional/</div>
+      <div>算法之路 - 排序</div>
+      <div>https://geraltgogo.github.io/2023/02/28/sort/</div>
     </div>
     <div class="license-meta">
       
@@ -407,7 +400,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月27日</div>
+          <div>2023年2月28日</div>
         </div>
       
       
@@ -451,18 +444,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/28/sort/" title="算法之路 - 排序">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">算法之路 - 排序</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/24/idea-masterplate/" title="IDEA 类、方法模版">
-                        <span class="hidden-mobile">IDEA 类、方法模版</span>
+                      <a href="/2023/02/27/java-optional/" title="Optional 详解">
+                        <span class="hidden-mobile">Optional 详解</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
